@@ -298,13 +298,60 @@ This project was developed to practice:
 * Exception Handling
 * Collections Framework
 
----
+---# Library Management System
 
 ```mermaid
-graph TD
-    A[Main] --> B[BookService]
-    A --> C[PatronService]
+classDiagram
+
+class Person
+class Patron
+class Book
+class Loan
+
+Person <|-- Patron
+
+Loan --> Book
+Loan --> Patron
+
+class BookRepository
+class PatronRepository
+
+BookRepository <|.. InMemoryBookRepository
+PatronRepository <|.. InMemoryPatronRepository
+
+class InMemoryBookRepository
+class InMemoryPatronRepository
+
+class BookService
+class PatronService
+class LendingService
+
+BookService --> BookRepository
+PatronService --> PatronRepository
+LendingService --> Book
+LendingService --> Patron
+
+class SearchStrategy
+class TitleSearchStrategy
+class AuthorSearchStrategy
+class ISBNSearchStrategy
+
+SearchStrategy <|.. TitleSearchStrategy
+SearchStrategy <|.. AuthorSearchStrategy
+SearchStrategy <|.. ISBNSearchStrategy
+
+class Observer
+class PatronObserver
+class ReservationNotifier
+
+Observer <|.. PatronObserver
+ReservationNotifier --> Observer
+
+class BookFactory
+
+BookFactory ..> Book
 ```
+
 
 ## Author
 
