@@ -300,80 +300,10 @@ This project was developed to practice:
 
 ---
 
-## Class Diagram
-
 ```mermaid
-classDiagram
-
-Person <|-- Patron
-
-Loan --> Book
-Loan --> Patron
-Patron --> Book
-
-BookRepository <|.. InMemoryBookRepository
-PatronRepository <|.. InMemoryPatronRepository
-LoanRepository <|.. InMemoryLoanRepository
-
-BookService --> BookRepository
-PatronService --> PatronRepository
-LendingService --> LoanRepository
-LendingService --> Book
-LendingService --> Patron
-
-ReservationService --> ReservationNotifier
-
-SearchStrategy <|.. TitleSearchStrategy
-SearchStrategy <|.. AuthorSearchStrategy
-SearchStrategy <|.. ISBNSearchStrategy
-
-BookService --> SearchStrategy
-
-Observer <|.. PatronObserver
-ReservationNotifier --> Observer
-
-BookFactory ..> Book
-
-Main --> LibraryConsoleUI
-
-LibraryConsoleUI --> BookService
-LibraryConsoleUI --> PatronService
-LibraryConsoleUI --> LendingService
-LibraryConsoleUI --> ReservationService
-LibraryConsoleUI --> RecommendationService
-
-class Person
-class Patron
-class Book
-class Loan
-
-class BookRepository
-class PatronRepository
-class LoanRepository
-
-class InMemoryBookRepository
-class InMemoryPatronRepository
-class InMemoryLoanRepository
-
-class BookService
-class PatronService
-class LendingService
-class ReservationService
-class RecommendationService
-
-class SearchStrategy
-class TitleSearchStrategy
-class AuthorSearchStrategy
-class ISBNSearchStrategy
-
-class Observer
-class PatronObserver
-class ReservationNotifier
-
-class BookFactory
-
-class Main
-class LibraryConsoleUI
+graph TD
+    A[Main] --> B[BookService]
+    A --> C[PatronService]
 ```
 
 ## Author
