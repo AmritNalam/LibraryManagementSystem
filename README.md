@@ -302,121 +302,74 @@ This project was developed to practice:
 
 ---
 # Library Management System
-## System Design
+## Class Diagram
 
 ```mermaid
 classDiagram
 
-%% ======================
-%% DOMAIN MODELS
-%% ======================
+%% =====================
+%% MODELS
+%% =====================
 
 class Person {
     <<abstract>>
-    +String id
-    +String name
+    +getId()
+    +getName()
+    +setName()
 }
 
 class Patron {
-    +borrowBook(Book)
-    +returnBook(Book)
     +getBorrowingHistory()
     +getCurrentlyBorrowedBooks()
+    +borrowBook(Book)
+    +returnBook(Book)
 }
 
 class Book {
-    +String isbn
-    +String title
-    +String author
-    +int publicationYear
-    +boolean available
-    +borrow()
-    +returnBook()
+    +getTitle()
+    +getAuthor()
+    +getIsbn()
+    +getPublicationYear()
+    +isAvailable()
+    +setAvailable()
 }
 
 class Loan {
-    +Book book
-    +Patron patron
+    +getBook()
+    +getPatron()
 }
 
-Person <|-- Patron
+class Branch
 
-Patron "1" --> "*" Book : borrows
+Person <|-- Patron
+Patron --> Book : borrows
 Loan --> Book
 Loan --> Patron
 
-%% ======================
+%% =====================
 %% REPOSITORIES
-%% ======================
+%% =====================
 
 class BookRepository {
     <<interface>>
-    +save(Book)
-    +findByIsbn(String)
-    +findAll()
-    +delete(String)
 }
 
 class PatronRepository {
     <<interface>>
-    +save(Patron)
-    +findById(String)
-    +findAll()
-}
-
-class LoanRepository {
-    <<interface>>
-    +save(Loan)
-    +findAll()
 }
 
 class InMemoryBookRepository
 class InMemoryPatronRepository
-class InMemoryLoanRepository
 
 BookRepository <|.. InMemoryBookRepository
 PatronRepository <|.. InMemoryPatronRepository
-LoanRepository <|.. InMemoryLoanRepository
 
-%% ======================
-%% SERVICES
-%% ======================
-
-class BookService {
-    +addBook()
-    +removeBook()
-    +search()
-}
-
-class PatronService {
-    +registerPatron()
-}
-
-class LendingService {
-    +checkout(Book,Patron)
-    +returnBook(Book,Patron)
-}
-
-class ReservationService {
-    +reserve(Book,Patron)
-}
-
-class RecommendationService
-
-BookService --> BookRepository
-PatronService --> PatronRepository
-LendingService --> LoanRepository
-LendingService --> Book
-LendingService --> Patron
-ReservationService --> ReservationNotifier
-
-%% ======================
+%% =====================
 %% STRATEGY PATTERN
-%% ======================
+%% =====================
 
 class SearchStrategy {
     <<interface>>
-    +search()
 }
 
 class TitleSearchStrategy
@@ -427,52 +380,67 @@ SearchStrategy <|.. TitleSearchStrategy
 SearchStrategy <|.. AuthorSearchStrategy
 SearchStrategy <|.. ISBNSearchStrategy
 
+%% =====================
+%% SERVICES
+%% =====================
+
+class BookService
+class PatronService
+class LendingService
+class ReservationService
+class RecommendationService
+class BranchTransferService
+
+BookService --> BookRepository
 BookService --> SearchStrategy
 
-%% ======================
+PatronService --> PatronRepository
+
+LendingService --> Loan
+LendingService --> Book
+LendingService --> Patron
+
+ReservationService --> ReservationNotifier
+ReservationService --> Book
+ReservationService --> Patron
+
+BranchTransferService --> Branch
+BranchTransferService --> Book
+
+%% =====================
 %% OBSERVER PATTERN
-%% ======================
+%% =====================
 
 class Observer {
     <<interface>>
-    +update()
 }
 
 class PatronObserver
-
-class ReservationNotifier {
-    +register()
-    +notifyUsers()
-}
+class ReservationNotifier
 
 Observer <|.. PatronObserver
 ReservationNotifier --> Observer
 
-%% ======================
+%% =====================
 %% FACTORY PATTERN
-%% ======================
+%% =====================
 
-class BookFactory {
-    +createBook()
-}
+class BookFactory
 
-BookFactory ..> Book : creates
+BookFactory ..> Book
 
-%% ======================
-%% APPLICATION
-%% ======================
+%% =====================
+%% APPLICATION ENTRY
+%% =====================
 
 class Main
-class LibraryConsoleUI
 
-Main --> LibraryConsoleUI
-LibraryConsoleUI --> BookService
-LibraryConsoleUI --> PatronService
-LibraryConsoleUI --> LendingService
-LibraryConsoleUI --> ReservationService
-LibraryConsoleUI --> RecommendationService
+Main --> BookService
+Main --> PatronService
+Main --> LendingService
+Main --> ReservationService
+Main --> RecommendationService
 ```
-
 
 
 ## Author
