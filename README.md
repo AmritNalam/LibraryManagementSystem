@@ -302,40 +302,123 @@ This project was developed to practice:
 
 ---
 # Library Management System
-# Library Management System
+## System Design
 
 ```mermaid
 classDiagram
 
-class Person
-class Patron
-class Book
-class Loan
+%% ======================
+%% DOMAIN MODELS
+%% ======================
+
+class Person {
+    <<abstract>>
+    +String id
+    +String name
+}
+
+class Patron {
+    +borrowBook(Book)
+    +returnBook(Book)
+    +getBorrowingHistory()
+    +getCurrentlyBorrowedBooks()
+}
+
+class Book {
+    +String isbn
+    +String title
+    +String author
+    +int publicationYear
+    +boolean available
+    +borrow()
+    +returnBook()
+}
+
+class Loan {
+    +Book book
+    +Patron patron
+}
 
 Person <|-- Patron
 
+Patron "1" --> "*" Book : borrows
 Loan --> Book
 Loan --> Patron
 
-class BookRepository
-class PatronRepository
+%% ======================
+%% REPOSITORIES
+%% ======================
 
-BookRepository <|.. InMemoryBookRepository
-PatronRepository <|.. InMemoryPatronRepository
+class BookRepository {
+    <<interface>>
+    +save(Book)
+    +findByIsbn(String)
+    +findAll()
+    +delete(String)
+}
+
+class PatronRepository {
+    <<interface>>
+    +save(Patron)
+    +findById(String)
+    +findAll()
+}
+
+class LoanRepository {
+    <<interface>>
+    +save(Loan)
+    +findAll()
+}
 
 class InMemoryBookRepository
 class InMemoryPatronRepository
+class InMemoryLoanRepository
 
-class BookService
-class PatronService
-class LendingService
+BookRepository <|.. InMemoryBookRepository
+PatronRepository <|.. InMemoryPatronRepository
+LoanRepository <|.. InMemoryLoanRepository
+
+%% ======================
+%% SERVICES
+%% ======================
+
+class BookService {
+    +addBook()
+    +removeBook()
+    +search()
+}
+
+class PatronService {
+    +registerPatron()
+}
+
+class LendingService {
+    +checkout(Book,Patron)
+    +returnBook(Book,Patron)
+}
+
+class ReservationService {
+    +reserve(Book,Patron)
+}
+
+class RecommendationService
 
 BookService --> BookRepository
 PatronService --> PatronRepository
+LendingService --> LoanRepository
 LendingService --> Book
 LendingService --> Patron
+ReservationService --> ReservationNotifier
 
-class SearchStrategy
+%% ======================
+%% STRATEGY PATTERN
+%% ======================
+
+class SearchStrategy {
+    <<interface>>
+    +search()
+}
+
 class TitleSearchStrategy
 class AuthorSearchStrategy
 class ISBNSearchStrategy
@@ -344,16 +427,50 @@ SearchStrategy <|.. TitleSearchStrategy
 SearchStrategy <|.. AuthorSearchStrategy
 SearchStrategy <|.. ISBNSearchStrategy
 
-class Observer
+BookService --> SearchStrategy
+
+%% ======================
+%% OBSERVER PATTERN
+%% ======================
+
+class Observer {
+    <<interface>>
+    +update()
+}
+
 class PatronObserver
-class ReservationNotifier
+
+class ReservationNotifier {
+    +register()
+    +notifyUsers()
+}
 
 Observer <|.. PatronObserver
 ReservationNotifier --> Observer
 
-class BookFactory
+%% ======================
+%% FACTORY PATTERN
+%% ======================
 
-BookFactory ..> Book
+class BookFactory {
+    +createBook()
+}
+
+BookFactory ..> Book : creates
+
+%% ======================
+%% APPLICATION
+%% ======================
+
+class Main
+class LibraryConsoleUI
+
+Main --> LibraryConsoleUI
+LibraryConsoleUI --> BookService
+LibraryConsoleUI --> PatronService
+LibraryConsoleUI --> LendingService
+LibraryConsoleUI --> ReservationService
+LibraryConsoleUI --> RecommendationService
 ```
 
 
