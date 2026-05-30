@@ -300,72 +300,31 @@ This project was developed to practice:
 
 ---
 
-## System Design
+## Class Diagram
 
 ```mermaid
 classDiagram
 
-%% ======================
-%% DOMAIN MODELS
-%% ======================
-
-class Person {
-    <<abstract>>
-    +String id
-    +String name
-}
-
-class Patron {
-    +borrowBook(Book)
-    +returnBook(Book)
-    +getBorrowingHistory()
-    +getCurrentlyBorrowedBooks()
-}
-
-class Book {
-    +String isbn
-    +String title
-    +String author
-    +int publicationYear
-    +boolean available
-    +borrow()
-    +returnBook()
-}
-
-class Loan {
-    +Book book
-    +Patron patron
-}
+class Person
+class Patron
+class Book
+class Loan
 
 Person <|-- Patron
-
-Patron "1" --> "*" Book : borrows
 Loan --> Book
 Loan --> Patron
-
-%% ======================
-%% REPOSITORIES
-%% ======================
+Patron --> Book
 
 class BookRepository {
     <<interface>>
-    +save(Book)
-    +findByIsbn(String)
-    +findAll()
-    +delete(String)
 }
 
 class PatronRepository {
     <<interface>>
-    +save(Patron)
-    +findById(String)
-    +findAll()
 }
 
 class LoanRepository {
     <<interface>>
-    +save(Loan)
-    +findAll()
 }
 
 class InMemoryBookRepository
@@ -376,29 +335,10 @@ BookRepository <|.. InMemoryBookRepository
 PatronRepository <|.. InMemoryPatronRepository
 LoanRepository <|.. InMemoryLoanRepository
 
-%% ======================
-%% SERVICES
-%% ======================
-
-class BookService {
-    +addBook()
-    +removeBook()
-    +search()
-}
-
-class PatronService {
-    +registerPatron()
-}
-
-class LendingService {
-    +checkout(Book,Patron)
-    +returnBook(Book,Patron)
-}
-
-class ReservationService {
-    +reserve(Book,Patron)
-}
-
+class BookService
+class PatronService
+class LendingService
+class ReservationService
 class RecommendationService
 
 BookService --> BookRepository
@@ -408,13 +348,8 @@ LendingService --> Book
 LendingService --> Patron
 ReservationService --> ReservationNotifier
 
-%% ======================
-%% STRATEGY PATTERN
-%% ======================
-
 class SearchStrategy {
     <<interface>>
-    +search()
 }
 
 class TitleSearchStrategy
@@ -427,43 +362,25 @@ SearchStrategy <|.. ISBNSearchStrategy
 
 BookService --> SearchStrategy
 
-%% ======================
-%% OBSERVER PATTERN
-%% ======================
-
 class Observer {
     <<interface>>
-    +update()
 }
 
 class PatronObserver
-
-class ReservationNotifier {
-    +register()
-    +notifyUsers()
-}
+class ReservationNotifier
 
 Observer <|.. PatronObserver
 ReservationNotifier --> Observer
 
-%% ======================
-%% FACTORY PATTERN
-%% ======================
+class BookFactory
 
-class BookFactory {
-    +createBook()
-}
-
-BookFactory ..> Book : creates
-
-%% ======================
-%% APPLICATION
-%% ======================
+BookFactory ..> Book
 
 class Main
 class LibraryConsoleUI
 
 Main --> LibraryConsoleUI
+
 LibraryConsoleUI --> BookService
 LibraryConsoleUI --> PatronService
 LibraryConsoleUI --> LendingService
