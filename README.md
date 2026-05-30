@@ -305,56 +305,23 @@ This project was developed to practice:
 ```mermaid
 classDiagram
 
-class Person
-class Patron
-class Book
-class Loan
-
 Person <|-- Patron
+
 Loan --> Book
 Loan --> Patron
 Patron --> Book
 
-class BookRepository {
-    <<interface>>
-}
-
-class PatronRepository {
-    <<interface>>
-}
-
-class LoanRepository {
-    <<interface>>
-}
-
-class InMemoryBookRepository
-class InMemoryPatronRepository
-class InMemoryLoanRepository
-
 BookRepository <|.. InMemoryBookRepository
 PatronRepository <|.. InMemoryPatronRepository
 LoanRepository <|.. InMemoryLoanRepository
-
-class BookService
-class PatronService
-class LendingService
-class ReservationService
-class RecommendationService
 
 BookService --> BookRepository
 PatronService --> PatronRepository
 LendingService --> LoanRepository
 LendingService --> Book
 LendingService --> Patron
+
 ReservationService --> ReservationNotifier
-
-class SearchStrategy {
-    <<interface>>
-}
-
-class TitleSearchStrategy
-class AuthorSearchStrategy
-class ISBNSearchStrategy
 
 SearchStrategy <|.. TitleSearchStrategy
 SearchStrategy <|.. AuthorSearchStrategy
@@ -362,22 +329,10 @@ SearchStrategy <|.. ISBNSearchStrategy
 
 BookService --> SearchStrategy
 
-class Observer {
-    <<interface>>
-}
-
-class PatronObserver
-class ReservationNotifier
-
 Observer <|.. PatronObserver
 ReservationNotifier --> Observer
 
-class BookFactory
-
 BookFactory ..> Book
-
-class Main
-class LibraryConsoleUI
 
 Main --> LibraryConsoleUI
 
@@ -386,6 +341,39 @@ LibraryConsoleUI --> PatronService
 LibraryConsoleUI --> LendingService
 LibraryConsoleUI --> ReservationService
 LibraryConsoleUI --> RecommendationService
+
+class Person
+class Patron
+class Book
+class Loan
+
+class BookRepository
+class PatronRepository
+class LoanRepository
+
+class InMemoryBookRepository
+class InMemoryPatronRepository
+class InMemoryLoanRepository
+
+class BookService
+class PatronService
+class LendingService
+class ReservationService
+class RecommendationService
+
+class SearchStrategy
+class TitleSearchStrategy
+class AuthorSearchStrategy
+class ISBNSearchStrategy
+
+class Observer
+class PatronObserver
+class ReservationNotifier
+
+class BookFactory
+
+class Main
+class LibraryConsoleUI
 ```
 
 ## Author
