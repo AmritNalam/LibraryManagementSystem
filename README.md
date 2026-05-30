@@ -253,6 +253,8 @@ PatronObserver
 * Java 26
 * IntelliJ IDEA
 ### Run
+
+```
 java Main
 ```
 
@@ -298,7 +300,9 @@ This project was developed to practice:
 * Exception Handling
 * Collections Framework
 
----# Library Management System
+---
+# Library Management System
+# Library Management System
 
 ```mermaid
 classDiagram
@@ -351,6 +355,7 @@ class BookFactory
 
 BookFactory ..> Book
 ```
+
 
 
 ## Author
