@@ -304,8 +304,6 @@ This project was developed to practice:
 # Library Management System
 ## Class Diagram
 
-## Class Diagram
-
 ```mermaid
 classDiagram
 
