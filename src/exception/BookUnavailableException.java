@@ -1,0 +1,1 @@
+package exception; public class BookUnavailableException extends RuntimeException{ public BookUnavailableException(String m){super(m);} }

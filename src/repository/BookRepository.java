@@ -1,0 +1,1 @@
+package repository; import model.Book; import java.util.*; public interface BookRepository{void save(Book b); Optional<Book> findByIsbn(String isbn); Collection<Book> findAll(); void delete(String isbn);}

@@ -1,0 +1,1 @@
+package service; import model.*; public class BranchTransferService{ public void transfer(String isbn, Branch from, Branch to){ Book b=from.getInventory().remove(isbn); if(b!=null) to.getInventory().put(isbn,b); }}

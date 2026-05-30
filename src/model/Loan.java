@@ -1,0 +1,1 @@
+package model; import java.time.*; public class Loan{private final Book book; private final Patron patron; private final LocalDate issued=LocalDate.now(); public Loan(Book b, Patron p){book=b;patron=p;} public Book getBook(){return book;} public Patron getPatron(){return patron;}}

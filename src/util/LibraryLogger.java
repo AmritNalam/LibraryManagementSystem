@@ -1,0 +1,1 @@
+package util; import java.util.logging.*; public class LibraryLogger{ public static final Logger LOGGER=Logger.getLogger("Library"); }

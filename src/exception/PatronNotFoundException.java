@@ -1,0 +1,1 @@
+package exception; public class PatronNotFoundException extends RuntimeException{ public PatronNotFoundException(String m){super(m);} }

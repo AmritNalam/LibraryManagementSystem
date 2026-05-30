@@ -1,0 +1,1 @@
+package repository; import model.Patron; import java.util.*; public interface PatronRepository{void save(Patron p); Optional<Patron> findById(String id); Collection<Patron> findAll();}

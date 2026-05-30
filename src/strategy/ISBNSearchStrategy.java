@@ -1,0 +1,1 @@
+package strategy; import model.Book; import java.util.*; public class ISBNSearchStrategy implements SearchStrategy{ public List<Book> search(Collection<Book> books, String key){List<Book> r=new ArrayList<>(); for(Book b:books) if(b.getIsbn().equals(key)) r.add(b); return r;}}

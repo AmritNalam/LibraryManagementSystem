@@ -1,0 +1,1 @@
+package strategy; import model.Book; import java.util.*; public class TitleSearchStrategy implements SearchStrategy{ public List<Book> search(Collection<Book> books, String key){List<Book> r=new ArrayList<>(); for(Book b:books) if(b.getTitle().toLowerCase().contains(key.toLowerCase())) r.add(b); return r;}}

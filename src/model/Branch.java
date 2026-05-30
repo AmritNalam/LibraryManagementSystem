@@ -1,0 +1,1 @@
+package model; import java.util.*; public class Branch{private String name; private Map<String,Book> inventory=new HashMap<>(); public Branch(String n){name=n;} public String getName(){return name;} public Map<String,Book> getInventory(){return inventory;}}

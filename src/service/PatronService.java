@@ -1,0 +1,1 @@
+package service; import repository.*; import model.*; public class PatronService{ private final PatronRepository repo; public PatronService(PatronRepository r){repo=r;} public void add(Patron p){repo.save(p);} }

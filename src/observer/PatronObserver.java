@@ -1,0 +1,1 @@
+package observer; public class PatronObserver implements Observer{private String name; public PatronObserver(String n){name=n;} public void update(String m){System.out.println(name+": "+m);}}

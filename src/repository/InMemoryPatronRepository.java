@@ -1,0 +1,1 @@
+package repository; import model.Patron; import java.util.*; public class InMemoryPatronRepository implements PatronRepository{private Map<String,Patron> data=new HashMap<>(); public void save(Patron p){data.put(p.getId(),p);} public Optional<Patron> findById(String id){return Optional.ofNullable(data.get(id));} public Collection<Patron> findAll(){return data.values();}}

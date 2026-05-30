@@ -1,0 +1,1 @@
+package observer; import java.util.*; public class ReservationNotifier{private List<Observer> observers=new ArrayList<>(); public void register(Observer o){observers.add(o);} public void notifyUsers(String msg){for(Observer o:observers)o.update(msg);}}
