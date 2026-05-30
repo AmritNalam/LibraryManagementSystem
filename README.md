@@ -304,144 +304,66 @@ This project was developed to practice:
 # Library Management System
 ## Class Diagram
 
+## Class Diagram
+
 ```mermaid
 classDiagram
 
-%% =====================
-%% MODELS
-%% =====================
-
-class Person {
-    <<abstract>>
-    +getId()
-    +getName()
-    +setName()
-}
-
-class Patron {
-    +getBorrowingHistory()
-    +getCurrentlyBorrowedBooks()
-    +borrowBook(Book)
-    +returnBook(Book)
-}
-
-class Book {
-    +getTitle()
-    +getAuthor()
-    +getIsbn()
-    +getPublicationYear()
-    +isAvailable()
-    +setAvailable()
-}
-
-class Loan {
-    +getBook()
-    +getPatron()
-}
-
-class Branch
-
 Person <|-- Patron
-Patron --> Book : borrows
-Loan --> Book
-Loan --> Patron
-
-%% =====================
-%% REPOSITORIES
-%% =====================
-
-class BookRepository {
-    <<interface>>
-}
-
-class PatronRepository {
-    <<interface>>
-}
-
-class InMemoryBookRepository
-class InMemoryPatronRepository
 
 BookRepository <|.. InMemoryBookRepository
 PatronRepository <|.. InMemoryPatronRepository
-
-%% =====================
-%% STRATEGY PATTERN
-%% =====================
-
-class SearchStrategy {
-    <<interface>>
-}
-
-class TitleSearchStrategy
-class AuthorSearchStrategy
-class ISBNSearchStrategy
 
 SearchStrategy <|.. TitleSearchStrategy
 SearchStrategy <|.. AuthorSearchStrategy
 SearchStrategy <|.. ISBNSearchStrategy
 
-%% =====================
-%% SERVICES
-%% =====================
-
-class BookService
-class PatronService
-class LendingService
-class ReservationService
-class RecommendationService
-class BranchTransferService
+Observer <|.. PatronObserver
 
 BookService --> BookRepository
 BookService --> SearchStrategy
 
 PatronService --> PatronRepository
 
-LendingService --> Loan
 LendingService --> Book
 LendingService --> Patron
+LendingService --> Loan
 
 ReservationService --> ReservationNotifier
-ReservationService --> Book
-ReservationService --> Patron
 
-BranchTransferService --> Branch
-BranchTransferService --> Book
-
-%% =====================
-%% OBSERVER PATTERN
-%% =====================
-
-class Observer {
-    <<interface>>
-}
-
-class PatronObserver
-class ReservationNotifier
-
-Observer <|.. PatronObserver
-ReservationNotifier --> Observer
-
-%% =====================
-%% FACTORY PATTERN
-%% =====================
-
-class BookFactory
+RecommendationService --> Patron
+RecommendationService --> Book
 
 BookFactory ..> Book
 
-%% =====================
-%% APPLICATION ENTRY
-%% =====================
+class Person
+class Patron
+class Book
+class Loan
 
-class Main
+class BookRepository
+class PatronRepository
 
-Main --> BookService
-Main --> PatronService
-Main --> LendingService
-Main --> ReservationService
-Main --> RecommendationService
+class InMemoryBookRepository
+class InMemoryPatronRepository
+
+class BookService
+class PatronService
+class LendingService
+class ReservationService
+class RecommendationService
+
+class SearchStrategy
+class TitleSearchStrategy
+class AuthorSearchStrategy
+class ISBNSearchStrategy
+
+class Observer
+class PatronObserver
+class ReservationNotifier
+
+class BookFactory
 ```
-
 
 ## Author
 
